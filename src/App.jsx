@@ -77,7 +77,7 @@ function App() {
       setLoading(true);
       const tensor = tf.browser
         .fromPixels(imageRef.current)
-        .resizeNearestNeighbor([256, 256]) 
+        .resizeNearestNeighbor([224, 224]) 
         .toFloat()
         .div(255.0) 
         .expandDims(); 
@@ -91,31 +91,31 @@ function App() {
       // Informasi penyakit, penyebab, dan solusi
       const diseaseInfos = [
         {
-          label: 'Bacteria wilt (Layu Bakteri)',
-          cause: 'Disebabkan oleh bakteri Ralstonia solanacearum yang menyerang jaringan pembuluh tanaman.',
-          solution: 'Gunakan bibit sehat, rotasi tanaman, dan buang tanaman yang terinfeksi.',
-        },
-        {
-          label: 'Early blight (Hawan kering)',
-          cause: 'Disebabkan oleh jamur Alternaria solani yang menyerang daun dan batang.',
-          solution: 'Gunakan fungisida, buang daun terinfeksi, dan lakukan rotasi tanaman.',
-        },
-        {
-          label: 'Late Blight (Hawar daun)',
+          label: 'Hawar Daun',
           cause: 'Disebabkan oleh jamur Phytophthora infestans yang menyerang daun, batang, dan umbi.',
           solution: 'Gunakan fungisida sistemik, tanam varietas tahan, dan hindari kelembapan berlebih.',
         },
         {
-          label: 'Nematode (Nematode cyst kentang)',
+          label: 'Hawar Kering',
+          cause: 'Disebabkan oleh jamur Alternaria solani yang menyerang daun dan batang.',
+          solution: 'Gunakan fungisida, buang daun terinfeksi, dan lakukan rotasi tanaman.',
+        },
+        {
+          label: 'Layu Bakteri',
+          cause: 'Disebabkan oleh bakteri Ralstonia solanacearum yang menyerang jaringan pembuluh tanaman.',
+          solution: 'Gunakan bibit sehat, rotasi tanaman, dan buang tanaman yang terinfeksi.',
+        },
+        {
+          label: 'Nematoda',
           cause: 'Disebabkan oleh nematoda Globodera spp. yang menyerang akar kentang.',
           solution: 'Gunakan varietas tahan, lakukan rotasi tanaman, dan solarisasi tanah.',
         },
         {
-          label: 'Virus PVY (Penyakit virus Y)',
+          label: 'Virus PVY',
           cause: 'Disebabkan oleh Potato virus Y yang ditularkan oleh kutu daun.',
           solution: 'Gunakan bibit bebas virus, kendalikan kutu daun, dan cabut tanaman terinfeksi.',
         },
-      ];
+      ]
 
       const info = diseaseInfos[predictedIndex];
       setResult({
