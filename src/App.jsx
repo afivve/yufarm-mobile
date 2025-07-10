@@ -28,7 +28,7 @@ function App() {
   }, []);
 
 
-  // Handler untuk input file (web fallback)
+  
   const handleUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -38,7 +38,7 @@ function App() {
     }
   };
 
-  // Handler untuk kamera (Capacitor)
+  
 
   const handleCamera = async () => {
     try {
@@ -54,7 +54,7 @@ function App() {
     }
   };
 
-  // Handler untuk galeri (Capacitor)
+  
 
   const handleGallery = async () => {
     try {
@@ -75,20 +75,46 @@ function App() {
     
     try {
       setLoading(true);
-      const tensor = tf.browser
-        .fromPixels(imageRef.current)
-        .resizeNearestNeighbor([224, 224]) 
+      
+      
+      console.log(`Original image dimensions: ${imageRef.current.naturalWidth}x${imageRef.current.naturalHeight}`);
+      
+      
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 224;
+      canvas.height = 224;
+      
+      
+      ctx.drawImage(imageRef.current, 0, 0, 224, 224);
+      
+      
+      const tensor = tf.browser.fromPixels(canvas)
         .toFloat()
-        .div(255.0) 
-        .expandDims(); 
+        .div(255.0)
+        .expandDims();
+      
+      
+      const tensorData = tensor.dataSync();
+      console.log('Tensor shape:', tensor.shape);
+      console.log('Tensor sample (first 10 values):', Array.from(tensorData.slice(0, 10)));
 
       const prediction = model.predict(tensor);
       const predictionData = await prediction.data();
+      
+      
+      console.log('Raw prediction values:', Array.from(predictionData));
+      
       const predictedIndex = predictionData.indexOf(Math.max(...predictionData));
+      console.log('Prediction Data:', predictionData);
+      console.log('Predicted Index:', predictedIndex);
+      console.log('Confidence:', predictionData[predictedIndex]);
       
-      console.log('Prediction:', predictionData, 'Predicted Index:', predictedIndex);
       
-      // Informasi penyakit, penyebab, dan solusi
+      tensor.dispose();
+      prediction.dispose();
+      
+      
       const diseaseInfos = [
         {
           label: 'Hawar Daun',

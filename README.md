@@ -7,4 +7,4 @@
 5. npx cap copy
 6. npx cap open android
 
-- Jika ada pembaruan model, ulangi dari langkah build lagi dari atau langkah 2 - 5 - 6
+- Jika ada pembaruan, ulangi dari langkah 2 - 5 - 6
